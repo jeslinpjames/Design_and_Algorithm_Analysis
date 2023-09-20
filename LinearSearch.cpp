@@ -25,6 +25,6 @@ int main(){
 	if(pos == -1)
 		cout<<"Element not present in the array!"<<endl;
 	else
-		cout<<"Element is present in indedx "<<pos<<endl;
+		cout<<"Element is present in index "<<pos<<endl;
 	return 0;
 }
