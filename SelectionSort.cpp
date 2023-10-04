@@ -12,16 +12,23 @@ public:
 };
 
 void Sort::SelectionSort() {
-    for(int i=0;i<l;i++){
-        for(int j=0;j<l;j++){
-            if(arr[j]>arr[i]){
-                int temp = arr[i];
-                arr[i] = arr[j];
-                arr[j]=temp;
+    for(int i=0;i<l-1;i++){
+        int min =i;
+        for(int j=i+1;j<l;j++){
+            if(arr[j]<arr[min]){
+              min =j;
             }
+        }
+        if (min != i) {
+            int temp = arr[i];
+            arr[i] = arr[min];
+            arr[min] = temp;
         }
     }
 }
+
+
+
 int* Sort::input(){
 	cout << "Enter the size of the array: ";
     cin >> l;
