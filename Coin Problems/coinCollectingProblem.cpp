@@ -22,6 +22,7 @@ class coinCollecting{
         void randomMap();
         void inputSize();
         int collect();
+        void initilizeMap(int maps[5][6]);
         ~coinCollecting();
 };
 coinCollecting::~coinCollecting(){
@@ -59,4 +60,24 @@ void coinCollecting::randomMap(){
             coin_map[i][j]=rand()%10;
         }
     }
+}
+void coinCollecting::initilizeMap(int maps[5][6]){
+    for(int i=0;i<n;i++){
+        for(int j=0;j<m;j++){
+            coin_map[i][j]=maps[i][j];
+        }
+    }
+}
+int main(){
+    coinCollecting ob(5,6);
+    int coin_map[5][6] = {
+        {0, 0, 0, 0, 1, 0},
+        {0, 1, 0, 1, 0, 0},
+        {0, 0, 0, 1, 0, 1},
+        {0, 0, 1, 0, 0, 1},
+        {1, 0, 0, 0, 1, 0}
+    };
+    ob.initilizeMap(coin_map);
+    cout<<"The maximum number of coins that can be collected is : "<<ob.collect()<<endl;
+    return 0;
 }
