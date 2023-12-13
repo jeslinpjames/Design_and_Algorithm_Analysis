@@ -19,6 +19,7 @@ class coinChange{
     void inputValue(){
         cout<<"Enter the amount : ";
         cin>>amount;
+        amount++;
     }
     int min(int a,int b){
         return a<b?a:b;
