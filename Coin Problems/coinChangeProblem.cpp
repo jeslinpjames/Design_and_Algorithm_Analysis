@@ -1,82 +1,79 @@
-#include <iostream>
+#include<iostream>
 using namespace std;
-
-class CoinChange {
-private:
-    int n;
-    int *coins;
-    int amount;
-    int* minCoins;
-    int INT_MAX_CUSTOM = 2147483647;  // Custom definition of INT_MAX
-
-public:
-    CoinChange() : n(0), coins(nullptr), amount(0) {}
-
-    void inputDenominationsAndAmount();
-    int countWays();
-    int minCoinCount();
-    ~CoinChange();
-};
-
-void CoinChange::inputDenominationsAndAmount() {
-    cout << "Enter the number of denominations: ";
-    cin >> n;
-    coins = new int[n];
-    cout << "Enter the denominations: ";
-    for (int i = 0; i < n; i++) {
-        cin >> coins[i];
-    }
-    cout << "Enter the target amount: ";
-    cin >> amount;
-    minCoins = new int[amount + 1];
-    for (int i = 0; i <= amount; i++) {
-        minCoins[i] = INT_MAX_CUSTOM;
-    }
-    minCoins[0] = 0;
-}
-
-int CoinChange::countWays() {
-    if (n <= 0)
-        return 0;
-
-    int dp[amount + 1] = {0};
-    dp[0] = 1;
-
-    for (int i = 0; i < n; i++) {
-        for (int j = coins[i]; j <= amount; j++) {
-            dp[j] += dp[j - coins[i]];
+class coinChange{
+    private:
+        int INT_MAX = 999999;
+        int n;
+        int *coins;
+        int amount;
+    public:
+    void inputCoins(){
+        cout<<"Enter the number of coins: ";
+        cin>>n;
+        coins = new int[n];
+        cout<<"Enter the coins: ";
+        for(int i=0;i<n;i++){
+            cin>>coins[i];
         }
     }
-
-    return dp[amount];
-}
-
-int CoinChange::minCoinCount() {
-    if (n <= 0)
-        return -1;
-
-    for (int i = 1; i <= amount; i++) {
-        for (int j = 0; j < n; j++) {
-            if (i - coins[j] >= 0 && minCoins[i - coins[j]] != INT_MAX_CUSTOM) {
-                minCoins[i] = min(minCoins[i], minCoins[i - coins[j]] + 1);
+    void inputValue(){
+        cout<<"Enter the amount : ";
+        cin>>amount;
+    }
+    int min(int a,int b){
+        return a<b?a:b;
+    }
+    void printCoins(int *count, int n, int *coins, int d)
+    {
+        cout << "The coins we choose are : ";
+        n--;
+        for (int i = 0; i < d; i++)
+        {
+            int value = count[n - coins[i]] + 1;
+            if (value == count[n])
+            {
+                n -= coins[i];
+                cout << coins[i] << ", ";
+                i--;
             }
         }
+        return;
     }
+    void minCoins()
+    {
+        int count[amount];
+        count[0] = 0;
+        for (int i = 1; i < amount; i++)
+        {
+            count[i] = INT_MAX;
 
-    return minCoins[amount];
-}
+            for (int j = 0; j < n; j++)
+            {
 
-CoinChange::~CoinChange() {
-    delete[] coins;
-    delete[] minCoins;
-}
+                if (i < coins[j])
+                    break;
 
-int main() {
-    CoinChange ob;
-    ob.inputDenominationsAndAmount();
-    int numWays = ob.countWays();
-    int minCoinCount = ob.minCoinCount();
-    cout << "Number of ways to make change: " << numWays << endl;
-    cout << "Minimum number of coins: " << minCoinCount << endl;
+                count[i] = min(count[i], count[i - coins[j]]);
+            }
+            ++count[i];
+        }
+        if (count[amount - 1] != INT_MAX)
+        {
+            cout << "Number of coins required: " << count[amount - 1] << endl;
+            printCoins(count, amount, coins, n);
+        }
+        else
+        {
+            cout << "Cannot be solved";
+        }
+        return;
+    }
+};
+int main()
+{
+    coinChange c;
+    c.inputCoins();
+    c.inputValue();
+    c.minCoins();
     return 0;
 }
