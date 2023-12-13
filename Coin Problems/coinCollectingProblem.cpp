@@ -18,17 +18,41 @@ class coinCollecting{
                 F[i]=new int[m];
             }
         }
-        void inputMap();
-        void randomMap();
-        void inputSize();
+        int getN(){
+            return n;
+        }
+        int getM(){
+            return m;
+        }
+        void printMap();
+        void printF();
         int collect();
-        void initilizeMap(int maps[5][6]);
+        void initilizeMap(int **maps);
         ~coinCollecting();
 };
-coinCollecting::~coinCollecting(){
+coinCollecting::~coinCollecting() {
+    for (int i = 0; i < n; i++) {
+        delete[] coin_map[i];
+    }
     delete[] coin_map;
+
+    for (int i = 0; i < n; i++) {
+        delete[] F[i];
+    }
+    delete[] F;
+}
+void coinCollecting::printMap(){
+    cout<<"The map is : "<<endl;
+    for(int i=0;i<n;i++){
+        for(int j=0;j<m;j++){
+            cout<<coin_map[i][j]<<" ";
+        }
+        cout<<endl;
+    }
+    return;
 }
 int coinCollecting::collect(){
+    F[0][0]=coin_map[0][0];
     for(int j=1;j<m;j++){
         F[0][j]=F[0][j-1]+coin_map[0][j];
     }
@@ -40,44 +64,49 @@ int coinCollecting::collect(){
     }
     return F[n-1][m-1];
 }
-void coinCollecting::inputSize(){
-    cout<<"Enter the value of n : ";
-    cin>>n;
-    cout<<"Enter the value of m : ";
-    cin>>m;
-}
-void coinCollecting::inputMap(){
-    cout<<"Enter the map: "<<endl;
+void coinCollecting::printF(){
+    cout<<"The F matrix is : "<<endl;
     for(int i=0;i<n;i++){
         for(int j=0;j<m;j++){
-            cin>>coin_map[i][j];
+            cout<<F[i][j]<<" ";
         }
+        cout<<endl;
     }
-}
-void coinCollecting::randomMap(){
-    for(int i=0;i<n;i++){
-        for(int j=0;j<m;j++){
-            coin_map[i][j]=rand()%10;
-        }
-    }
-}
-void coinCollecting::initilizeMap(int maps[5][6]){
+    return;
+}   
+void coinCollecting::initilizeMap(int **maps){
     for(int i=0;i<n;i++){
         for(int j=0;j<m;j++){
             coin_map[i][j]=maps[i][j];
         }
     }
+    return; 
 }
+
 int main(){
-    coinCollecting ob(5,6);
-    int coin_map[5][6] = {
-        {0, 0, 0, 0, 1, 0},
-        {0, 1, 0, 1, 0, 0},
-        {0, 0, 0, 1, 0, 1},
-        {0, 0, 1, 0, 0, 1},
-        {1, 0, 0, 0, 1, 0}
-    };
-    ob.initilizeMap(coin_map);
-    cout<<"The maximum number of coins that can be collected is : "<<ob.collect()<<endl;
+    int m ,n;
+    cout<<"Enter the value of m : ";
+    cin>>m;
+    cout<<"Enter the value of n : ";
+    cin>>n;
+    coinCollecting ob(m,n);
+     int **coins = new int*[m];
+    for(int i = 0; i < m; i++) {
+        coins[i] = new int[n];
+    }
+    cout << "Enter 1 if coin is present,else zero" << endl;
+    for (int i = 0; i < m; i++)
+    {
+        for (int j = 0; j < n; j++)
+        {
+            cout << "Location " << i + 1 << "," << j + 1 << ":";
+            cin >> coins[i][j];
+        }
+    }
+    cout << endl;
+    ob.initilizeMap(coins);
+    ob.printMap();
+    cout<<"The maximum number of coins collected is : "<<ob.collect()<<endl;
+    ob.printF();
     return 0;
 }
