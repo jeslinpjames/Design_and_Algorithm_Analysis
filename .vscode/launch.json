@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "d:/git/Design_and_Algorithm_Analysis",
-      "program": "d:/git/Design_and_Algorithm_Analysis/build/Debug/outDebug",
+      "cwd": "d:/git/Design_and_Algorithm_Analysis/LAB_CYCLE_2",
+      "program": "d:/git/Design_and_Algorithm_Analysis/LAB_CYCLE_2/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
